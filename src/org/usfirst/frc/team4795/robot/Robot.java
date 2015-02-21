@@ -22,8 +22,9 @@ public class Robot extends SampleRobot {
 	
 	CANJaguar leftMotor;
 	CANJaguar rightMotor;
-	CANJaguar transverseMotor;
-	  
+	
+	//CANJaguar transverseMotor;  //TODO
+	
 	Joystick leftJoy;
 	Joystick rightJoy;
 	  
@@ -35,7 +36,9 @@ public class Robot extends SampleRobot {
 	  
 	  //init motors
       leftMotor = new CANJaguar(1); 
-      transverseMotor = new CANJaguar(2); 
+      
+      
+      //transverseMotor = new CANJaguar(2);  //TODO
       rightMotor = new CANJaguar(3); 
       winchMotor = new CANJaguar(4); 
       
@@ -58,27 +61,31 @@ public class Robot extends SampleRobot {
   public void operatorControl() {
 	while(isOperatorControl()){
 		
-		
+		/*
 		if(leftJoy.getTrigger()){
-			transverseMotor.set(leftJoy.getX());
+			transverseMotor.set(-leftJoy.getX());
+			leftMotor.set(0);
+			rightMotor.set(0);
 		}
 		else{
 			transverseMotor.set(0);
+			leftMotor.set(-leftJoy.getY());
+			rightMotor.set(rightJoy.getY());
 		}
+		*/ //TODO
 		
 		//set drive motors
-		leftMotor.set(leftJoy.getY());
-		rightMotor.set(-rightJoy.getY());
+		
 		
 		
 		
 		//add controls for the winch motor
-		if(leftJoy.getRawButton(5) || leftJoy.getRawButton(6)){
-			if(leftJoy.getRawButton(5)){
-				winchMotor.set(0.5);
+		if(leftJoy.getRawButton(4) || leftJoy.getRawButton(6)){
+			if(leftJoy.getRawButton(4)){
+				winchMotor.set(-0.50);
 			}
 			if(leftJoy.getRawButton(6)){
-				winchMotor.set(-0.5);
+				winchMotor.set(0.50);
 			}
 		}
 		else{
