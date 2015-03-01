@@ -43,6 +43,8 @@ public class Robot extends SampleRobot {
       winchMotor = new CANJaguar(4); 
       
       
+      winchMotor.setPositionMode(CANJaguar.kQuadEncoder, 2048, -500, 0, 10);
+      winchMotor.enableControl();
       
       
       //init joysticks
