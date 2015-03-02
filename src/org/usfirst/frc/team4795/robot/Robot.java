@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is a short sample program demonstrating how to use the basic throttle
@@ -42,9 +43,24 @@ public class Robot extends SampleRobot {
       rightMotor = new CANJaguar(3); 
       winchMotor = new CANJaguar(4); 
       
-      
-      winchMotor.setPositionMode(CANJaguar.kQuadEncoder, 2048, -500, 0, 10);
+      /*
+      //home the elevator
+      winchMotor.setVoltageMode();
       winchMotor.enableControl();
+      while(winchMotor.getForwardLimitOK()){
+    	 winchMotor.set(-0.5);
+    	 Timer.delay(0.05);
+      }
+      */
+     
+      winchMotor.setPositionMode(CANJaguar.kQuadEncoder, 2048, -40, 0, 5);
+
+      winchMotor.configSoftPositionLimits(0, 6);
+      
+      
+      winchMotor.enableControl(0);
+      
+      SmartDashboard.putNumber("encoderSet", 0);
       
       
       //init joysticks
@@ -79,7 +95,7 @@ public class Robot extends SampleRobot {
 		//set drive motors
 		
 		
-		
+		/*
 		
 		//add controls for the winch motor
 		if(leftJoy.getRawButton(4) || leftJoy.getRawButton(6)){
@@ -93,12 +109,18 @@ public class Robot extends SampleRobot {
 		else{
 			winchMotor.set(0);
 		}
+		*/
 		
 		
+	    winchMotor.set(SmartDashboard.getNumber("encoderSet", 0));
 		
 		Timer.delay(0.05);
 		
 		System.out.println(m_gyro.getRotationX() + "\t" + m_gyro.getRotationY() + "\t" + m_gyro.getRotationZ());
+		
+		SmartDashboard.putNumber("encoder", winchMotor.getPosition());
+		
+		
 
 	}
   }
